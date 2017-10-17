@@ -2,6 +2,10 @@
 
 > List dependencies (in your terminal)
 
+[![Build Status](https://travis-ci.org/nexdrew/cies.svg?branch=master)](https://travis-ci.org/nexdrew/cies)
+[![Coverage Status](https://coveralls.io/repos/github/nexdrew/cies/badge.svg?branch=master)](https://coveralls.io/github/nexdrew/cies?branch=master)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 Simple CLI to list (different types of) dependencies from a package.json file.
 
 Why? Because:
