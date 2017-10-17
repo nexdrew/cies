@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "cliui": "^3.2.0",
+    "decamelize": "^1.1.1",
+    "find-up": "^2.1.0"
+  },
+  "bundleDependencies": [
+    "abbrev",
+    "ansi-regex",
+    "ansicolors",
+    "aproba"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "cliui": "^3.2.0",
+    "decamelize": "^1.1.1",
+    "find-up": "^2.1.0"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "chalk": "^1.1.3",
+    "which": "^1.2.9"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  },
+  "bundledDependencies": [
+    "cliui",
+    "dezalgo",
+    "fs-vacuum",
+    "write-file-atomic"
+  ],
+  "optionalDependencies": {
+    "react-router": "^1.0.2",
+    "redux-simple-router": "^1.0.1"
+  }
+}

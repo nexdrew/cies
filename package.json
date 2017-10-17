@@ -1,0 +1,49 @@
+{
+  "name": "cies",
+  "version": "1.0.0",
+  "description": "List dependencies in your terminal",
+  "main": "index.js",
+  "bin": "cli.js",
+  "files": [
+    "cli.js",
+    "index.js"
+  ],
+  "scripts": {
+    "pretest": "standard",
+    "test": "tap --cov test/test*.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nexdrew/cies.git"
+  },
+  "keywords": [
+    "dependencies",
+    "deps",
+    "devDependencies",
+    "dev",
+    "peerDependencies",
+    "peer",
+    "bundledDependencies",
+    "bundled",
+    "optionalDependencies",
+    "optional",
+    "cli"
+  ],
+  "author": "nexdrew",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nexdrew/cies/issues"
+  },
+  "homepage": "https://github.com/nexdrew/cies#readme",
+  "devDependencies": {
+    "coveralls": "^3.0.0",
+    "standard": "^10.0.3",
+    "standard-version": "^4.2.0",
+    "tap": "^10.7.2"
+  },
+  "dependencies": {
+    "sywac": "^1.2.0"
+  }
+}
