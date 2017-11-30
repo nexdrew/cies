@@ -14,7 +14,19 @@ Why? Because:
 2. I'm tired of using the alias `node -e '\''Object.keys(require("./package.json").dependencies).forEach(x => console.log(x))'\''` on every machine
 3. I want something slightly more robust (support for devDependencies and directories other than cwd).
 
-Combine this CLI with [`nfo`](https://github.com/nexdrew/nfo) to easily query npm:
+**New in version 2**: Output name, types, and locally installed version (with `-v` flag) of each dependency!
+
+```console
+$ cies -asv
+chalk            prod 2.3.0
+coveralls        dev  3.0.0
+standard         dev  10.0.3
+standard-version dev  4.2.0
+sywac            prod 1.2.0
+tap              dev  10.7.2
+```
+
+When piping stdout to another program, `cies` will infer the `--terse` flag to only print dependency names without color. Here's an example, using [`nfo`](https://github.com/nexdrew/nfo) to easily query npm:
 
 ```console
 $ cies | xargs nfo dist-tags
@@ -62,8 +74,10 @@ Options:
   -a, --all        Include dependencies from all types   [boolean]
   -x, --exclusive  Exclude production dependencies       [boolean]
   -s, --sort       Sort list before printing             [boolean]
+  -v, --versions   Lookup current installed versions     [boolean]
+  -t, --terse      Print names only, without color       [boolean]
   -h, --help       Print this help content               [boolean]
-  -v, --version    Print cies program version            [boolean]
+  -V, --version    Print cies program version            [boolean]
 ```
 
 ## License
