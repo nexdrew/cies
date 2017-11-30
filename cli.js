@@ -38,7 +38,7 @@ require('sywac')
     desc: 'Sort list before printing'
   })
   .boolean('-v, --versions', {
-    desc: 'Lookup current installed version'
+    desc: 'Lookup current installed versions'
   })
   .boolean('-t, --terse', {
     desc: 'Print names only, without color'
