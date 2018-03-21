@@ -38,7 +38,7 @@ const cli = require('sywac')
     desc: 'Sort list before printing'
   })
   .boolean('-v, --versions', {
-    desc: 'Lookup current installed versions'
+    desc: 'Lookup installed and latest versions'
   })
   .boolean('-t, --terse', {
     desc: 'Print names only, without color'
