@@ -9,14 +9,13 @@ const chalk = require('chalk')
 
 const parentPath = path.resolve(__dirname, '..')
 const cliPath = path.join(parentPath, 'cli.js')
+const wrapperPath = path.resolve(__dirname, 'wrapper.js')
 
-function cli (args, disableColor) {
-  const env = Object.assign({}, process.env)
-  if (disableColor) delete env.FORCE_COLOR
+function cli (args, useWrapper) {
   return new Promise((resolve, reject) => {
-    cp.execFile(cliPath, args ? args.split(/\s/) : [], {
+    cp.execFile(useWrapper ? wrapperPath : cliPath, args ? args.split(/\s/) : [], {
       encoding: 'utf8',
-      env
+      env: Object.assign({}, process.env)
     }, (err, stdout, stderr) => {
       if (err) return reject(err)
       resolve({ stdout, stderr })
@@ -31,8 +30,11 @@ function withLineFeeds (array) {
 test('default includes dependencies', t => {
   return cli().then(r => {
     t.equal(r.stdout, withLineFeeds([
-      chalk`{white chalk} {cyan prod}`,
-      chalk`{white sywac} {cyan prod}`
+      chalk`{white chalk}          {cyan prod} ^2.3.2`,
+      chalk`{white latest-version} {cyan prod} ^3.1.0`,
+      chalk`{white ora}            {cyan prod} ^2.0.0`,
+      chalk`{white semver}         {cyan prod} ^5.5.0`,
+      chalk`{white sywac}          {cyan prod} ^1.2.0`
     ]))
     t.notOk(r.stderr)
   })
@@ -41,12 +43,16 @@ test('default includes dependencies', t => {
 test('--dev includes dependencies and devDependencies', t => {
   return cli(`${parentPath} --dev`).then(r => {
     t.equal(r.stdout, withLineFeeds([
-      chalk`{white chalk}            {cyan prod}`,
-      chalk`{white sywac}            {cyan prod}`,
-      chalk`{white coveralls}        {magenta dev}`,
-      chalk`{white standard}         {magenta dev}`,
-      chalk`{white standard-version} {magenta dev}`,
-      chalk`{white tap}              {magenta dev}`
+      chalk`{white chalk}            {cyan prod} ^2.3.2`,
+      chalk`{white latest-version}   {cyan prod} ^3.1.0`,
+      chalk`{white ora}              {cyan prod} ^2.0.0`,
+      chalk`{white semver}           {cyan prod} ^5.5.0`,
+      chalk`{white sywac}            {cyan prod} ^1.2.0`,
+      chalk`{white coveralls}        {magenta dev}  ^3.0.0`,
+      chalk`{white mockery}          {magenta dev}  ^2.1.0`,
+      chalk`{white standard}         {magenta dev}  ^11.0.1`,
+      chalk`{white standard-version} {magenta dev}  ^4.3.0`,
+      chalk`{white tap}              {magenta dev}  ^11.1.3`
     ]))
     t.notOk(r.stderr)
   })
@@ -55,12 +61,16 @@ test('--dev includes dependencies and devDependencies', t => {
 test('--all includes everything defined', t => {
   return cli(`${parentPath} --all`).then(r => {
     t.equal(r.stdout, withLineFeeds([
-      chalk`{white chalk}            {cyan prod}`,
-      chalk`{white sywac}            {cyan prod}`,
-      chalk`{white coveralls}        {magenta dev}`,
-      chalk`{white standard}         {magenta dev}`,
-      chalk`{white standard-version} {magenta dev}`,
-      chalk`{white tap}              {magenta dev}`
+      chalk`{white chalk}            {cyan prod} ^2.3.2`,
+      chalk`{white latest-version}   {cyan prod} ^3.1.0`,
+      chalk`{white ora}              {cyan prod} ^2.0.0`,
+      chalk`{white semver}           {cyan prod} ^5.5.0`,
+      chalk`{white sywac}            {cyan prod} ^1.2.0`,
+      chalk`{white coveralls}        {magenta dev}  ^3.0.0`,
+      chalk`{white mockery}          {magenta dev}  ^2.1.0`,
+      chalk`{white standard}         {magenta dev}  ^11.0.1`,
+      chalk`{white standard-version} {magenta dev}  ^4.3.0`,
+      chalk`{white tap}              {magenta dev}  ^11.1.3`
     ]))
     t.notOk(r.stderr)
   })
@@ -69,12 +79,16 @@ test('--all includes everything defined', t => {
 test('--sort sorts list', t => {
   return cli(`${parentPath} --all --sort`).then(r => {
     t.equal(r.stdout, withLineFeeds([
-      chalk`{white chalk}            {cyan prod}`,
-      chalk`{white coveralls}        {magenta dev}`,
-      chalk`{white standard}         {magenta dev}`,
-      chalk`{white standard-version} {magenta dev}`,
-      chalk`{white sywac}            {cyan prod}`,
-      chalk`{white tap}              {magenta dev}`
+      chalk`{white chalk}            {cyan prod} ^2.3.2`,
+      chalk`{white coveralls}        {magenta dev}  ^3.0.0`,
+      chalk`{white latest-version}   {cyan prod} ^3.1.0`,
+      chalk`{white mockery}          {magenta dev}  ^2.1.0`,
+      chalk`{white ora}              {cyan prod} ^2.0.0`,
+      chalk`{white semver}           {cyan prod} ^5.5.0`,
+      chalk`{white standard}         {magenta dev}  ^11.0.1`,
+      chalk`{white standard-version} {magenta dev}  ^4.3.0`,
+      chalk`{white sywac}            {cyan prod} ^1.2.0`,
+      chalk`{white tap}              {magenta dev}  ^11.1.3`
     ]))
     t.notOk(r.stderr)
   })
@@ -82,23 +96,22 @@ test('--sort sorts list', t => {
 
 test('--terse prints uncolored names only', t => {
   return cli(`${parentPath} --all --terse`).then(r => {
-    t.equal(r.stdout, withLineFeeds(['chalk', 'sywac', 'coveralls', 'standard', 'standard-version', 'tap']))
-    t.notOk(r.stderr)
-  })
-})
-
-test('infers --terse if no color supported (e.g. when piping stdout to another program)', t => {
-  return cli(`${parentPath} -a`, true).then(r => {
-    t.equal(r.stdout, withLineFeeds(['chalk', 'sywac', 'coveralls', 'standard', 'standard-version', 'tap']))
+    t.equal(r.stdout, withLineFeeds(['chalk', 'latest-version', 'ora', 'semver', 'sywac', 'coveralls', 'mockery', 'standard', 'standard-version', 'tap']))
     t.notOk(r.stderr)
   })
 })
 
 test('fails if no package.json file', t => {
-  return cli('dne').catch(err => {
-    t.equal(err.code, 1)
-    t.includes(err.message, `File ${path.join('dne', 'package.json')} does not exist :(`)
-  })
+  return Promise.all([
+    cli('dne').catch(err => {
+      t.equal(err.code, 1)
+      t.includes(err.message, `File ${path.join('dne', 'package.json')} does not exist :(`)
+    }),
+    cli('dne -v').catch(err => {
+      t.equal(err.code, 1)
+      t.includes(err.message, `File ${path.join('dne', 'package.json')} does not exist :(`)
+    })
+  ])
 })
 
 test('fails if package.json invalid json', t => {
@@ -125,42 +138,42 @@ test('prints nothing if no dependencies', t => {
 test('supports all dependency types', t => {
   return cli(`${path.resolve(__dirname, 'all')} -dpbos`).then(r => {
     t.equal(r.stdout, withLineFeeds([
-      chalk`{white @nexdrew/slugid}     {cyan prod}`,
-      chalk`{white chai}                {magenta dev}`,
-      chalk`{white chalk}               {magenta dev}`,
-      chalk`{white cliui}               {cyan prod},{green bundled}`,
-      chalk`{white decamelize}          {cyan prod}`,
-      chalk`{white dezalgo}             {green bundled}`,
-      chalk`{white find-up}             {cyan prod}`,
-      chalk`{white fs-vacuum}           {green bundled}`,
-      chalk`{white react}               {blue peer}`,
-      chalk`{white react-dom}           {blue peer}`,
-      chalk`{white react-router}        {yellow optional}`,
-      chalk`{white redux-simple-router} {yellow optional}`,
-      chalk`{white which}               {magenta dev}`,
-      chalk`{white write-file-atomic}   {green bundled}`
+      chalk`{white @nexdrew/slugid}     {cyan prod}         ^2.0.0`,
+      chalk`{white chai}                {magenta dev}          ^3.4.1`,
+      chalk`{white chalk}               {magenta dev}          ^1.1.3`,
+      chalk`{white cliui}               {cyan prod},{green bundled} ^3.2.0`,
+      chalk`{white decamelize}          {cyan prod}         ^1.1.1`,
+      chalk`{white dezalgo}             {green bundled}      unknown`,
+      chalk`{white find-up}             {cyan prod},{magenta dev}     ^2.1.0`,
+      chalk`{white fs-vacuum}           {green bundled}      unknown`,
+      chalk`{white react}               {blue peer}         ^16.0.0`,
+      chalk`{white react-dom}           {blue peer}         ^16.0.0`,
+      chalk`{white react-router}        {yellow optional}     ^1.0.2`,
+      chalk`{white redux-simple-router} {yellow optional}     ^1.0.1`,
+      chalk`{white which}               {magenta dev}          ^1.2.9`,
+      chalk`{white write-file-atomic}   {green bundled}      unknown`
     ]))
     t.notOk(r.stderr)
   })
 })
 
 test('-v looks up installed versions', t => {
-  return cli(`${path.resolve(__dirname, 'all')} -asv`).then(r => {
+  return cli(`${path.resolve(__dirname, 'all')} -asv`, true).then(r => {
     t.equal(r.stdout, withLineFeeds([
-      chalk`{white @nexdrew/slugid}     {cyan prod}         {inverse 2.0.1}`,
-      chalk`{white chai}                {magenta dev}          {inverse not installed}`,
-      chalk`{white chalk}               {magenta dev}          {inverse not installed}`,
-      chalk`{white cliui}               {cyan prod},{green bundled} {inverse 3.3.0}`,
-      chalk`{white decamelize}          {cyan prod}         {inverse 1.1.1}`,
-      chalk`{white dezalgo}             {green bundled}      {inverse not installed}`,
-      chalk`{white find-up}             {cyan prod}         {inverse 2.1.0}`,
-      chalk`{white fs-vacuum}           {green bundled}      {inverse not installed}`,
-      chalk`{white react}               {blue peer}         {inverse not installed}`,
-      chalk`{white react-dom}           {blue peer}         {inverse not installed}`,
-      chalk`{white react-router}        {yellow optional}     {inverse not installed}`,
-      chalk`{white redux-simple-router} {yellow optional}     {inverse not installed}`,
-      chalk`{white which}               {magenta dev}          {inverse not installed}`,
-      chalk`{white write-file-atomic}   {green bundled}      {inverse not installed}`
+      chalk`{white @nexdrew/slugid}     {cyan prod}         ^2.0.0  {inverse 2.0.1}         {blue 2.0.2}     {blue patch}`,
+      chalk`{white chai}                {magenta dev}          ^3.4.1  {inverse not installed} {magenta 3.5.0}     {magenta in-range}`,
+      chalk`{white chalk}               {magenta dev}          ^1.1.3  {inverse not installed} {cyan 9.9.9}     {cyan out-of-range}`,
+      chalk`{white cliui}               {cyan prod},{green bundled} ^3.2.0  {inverse 3.3.0}         {yellow 3.4.0}     {yellow minor}`,
+      chalk`{white decamelize}          {cyan prod}         ^1.1.1  {inverse 1.1.1}         {red 9.9.9}     {red major}`,
+      chalk`{white dezalgo}             {green bundled}      unknown {inverse not installed} 9.9.9     ¯\\_(ツ)_/¯`,
+      chalk`{white find-up}             {cyan prod},{magenta dev}     ^2.1.0  {inverse 2.1.0}         {green 2.1.0}`,
+      chalk`{white fs-vacuum}           {green bundled}      unknown {inverse not installed} no latest ¯\\_(ツ)_/¯`,
+      chalk`{white react}               {blue peer}         ^16.0.0 {inverse not installed} {cyan 9.9.9}     {cyan out-of-range}`,
+      chalk`{white react-dom}           {blue peer}         ^16.0.0 {inverse not installed} {cyan 9.9.9}     {cyan out-of-range}`,
+      chalk`{white react-router}        {yellow optional}     ^1.0.2  {inverse not installed} {cyan 9.9.9}     {cyan out-of-range}`,
+      chalk`{white redux-simple-router} {yellow optional}     ^1.0.1  {inverse not installed} {cyan 9.9.9}     {cyan out-of-range}`,
+      chalk`{white which}               {magenta dev}          ^1.2.9  {inverse not installed} {cyan 9.9.9}     {cyan out-of-range}`,
+      chalk`{white write-file-atomic}   {green bundled}      unknown {inverse not installed} 9.9.9     ¯\\_(ツ)_/¯`
     ]))
     t.notOk(r.stderr)
   })
@@ -169,10 +182,10 @@ test('-v looks up installed versions', t => {
 test('supports alt bundleDependencies', t => {
   return cli(`${path.resolve(__dirname, 'bundle-alt')} -xb`).then(r => {
     t.equal(r.stdout, withLineFeeds([
-      chalk`{white abbrev}     {green bundled}`,
-      chalk`{white ansi-regex} {green bundled}`,
-      chalk`{white ansicolors} {green bundled}`,
-      chalk`{white aproba}     {green bundled}`
+      chalk`{white abbrev}     {green bundled} unknown`,
+      chalk`{white ansi-regex} {green bundled} unknown`,
+      chalk`{white ansicolors} {green bundled} unknown`,
+      chalk`{white aproba}     {green bundled} unknown`
     ]))
     t.notOk(r.stderr)
   })
