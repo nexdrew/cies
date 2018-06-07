@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/nexdrew/cies.svg?branch=master)](https://travis-ci.org/nexdrew/cies)
 [![Coverage Status](https://coveralls.io/repos/github/nexdrew/cies/badge.svg?branch=master)](https://coveralls.io/github/nexdrew/cies?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Greenkeeper badge](https://badges.greenkeeper.io/nexdrew/cies.svg)](https://greenkeeper.io/)
 
 List dependencies from package.json and easily compare installed version against latest version published.
 

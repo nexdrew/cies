@@ -6,6 +6,7 @@ const test = require('tap').test
 const cp = require('child_process')
 const path = require('path')
 const chalk = require('chalk')
+const pkg = require('../package.json')
 
 const parentPath = path.resolve(__dirname, '..')
 const cliPath = path.join(parentPath, 'cli.js')
@@ -30,11 +31,11 @@ function withLineFeeds (array) {
 test('default includes dependencies', t => {
   return cli().then(r => {
     t.equal(r.stdout, withLineFeeds([
-      chalk`{white chalk}          {cyan prod} ^2.3.2`,
-      chalk`{white latest-version} {cyan prod} ^3.1.0`,
-      chalk`{white ora}            {cyan prod} ^2.0.0`,
-      chalk`{white semver}         {cyan prod} ^5.5.0`,
-      chalk`{white sywac}          {cyan prod} ^1.2.0`
+      chalk`{white chalk}          {cyan prod} ${pkg.dependencies.chalk}`,
+      chalk`{white latest-version} {cyan prod} ${pkg.dependencies['latest-version']}`,
+      chalk`{white ora}            {cyan prod} ${pkg.dependencies.ora}`,
+      chalk`{white semver}         {cyan prod} ${pkg.dependencies.semver}`,
+      chalk`{white sywac}          {cyan prod} ${pkg.dependencies.sywac}`
     ]))
     t.notOk(r.stderr)
   })
@@ -43,16 +44,16 @@ test('default includes dependencies', t => {
 test('--dev includes dependencies and devDependencies', t => {
   return cli(`${parentPath} --dev`).then(r => {
     t.equal(r.stdout, withLineFeeds([
-      chalk`{white chalk}            {cyan prod} ^2.3.2`,
-      chalk`{white latest-version}   {cyan prod} ^3.1.0`,
-      chalk`{white ora}              {cyan prod} ^2.0.0`,
-      chalk`{white semver}           {cyan prod} ^5.5.0`,
-      chalk`{white sywac}            {cyan prod} ^1.2.0`,
-      chalk`{white coveralls}        {magenta dev}  ^3.0.0`,
-      chalk`{white mockery}          {magenta dev}  ^2.1.0`,
-      chalk`{white standard}         {magenta dev}  ^11.0.1`,
-      chalk`{white standard-version} {magenta dev}  ^4.3.0`,
-      chalk`{white tap}              {magenta dev}  ^11.1.3`
+      chalk`{white chalk}            {cyan prod} ${pkg.dependencies.chalk}`,
+      chalk`{white latest-version}   {cyan prod} ${pkg.dependencies['latest-version']}`,
+      chalk`{white ora}              {cyan prod} ${pkg.dependencies.ora}`,
+      chalk`{white semver}           {cyan prod} ${pkg.dependencies.semver}`,
+      chalk`{white sywac}            {cyan prod} ${pkg.dependencies.sywac}`,
+      chalk`{white coveralls}        {magenta dev}  ${pkg.devDependencies.coveralls}`,
+      chalk`{white mockery}          {magenta dev}  ${pkg.devDependencies.mockery}`,
+      chalk`{white standard}         {magenta dev}  ${pkg.devDependencies.standard}`,
+      chalk`{white standard-version} {magenta dev}  ${pkg.devDependencies['standard-version']}`,
+      chalk`{white tap}              {magenta dev}  ${pkg.devDependencies.tap}`
     ]))
     t.notOk(r.stderr)
   })
@@ -61,16 +62,16 @@ test('--dev includes dependencies and devDependencies', t => {
 test('--all includes everything defined', t => {
   return cli(`${parentPath} --all`).then(r => {
     t.equal(r.stdout, withLineFeeds([
-      chalk`{white chalk}            {cyan prod} ^2.3.2`,
-      chalk`{white latest-version}   {cyan prod} ^3.1.0`,
-      chalk`{white ora}              {cyan prod} ^2.0.0`,
-      chalk`{white semver}           {cyan prod} ^5.5.0`,
-      chalk`{white sywac}            {cyan prod} ^1.2.0`,
-      chalk`{white coveralls}        {magenta dev}  ^3.0.0`,
-      chalk`{white mockery}          {magenta dev}  ^2.1.0`,
-      chalk`{white standard}         {magenta dev}  ^11.0.1`,
-      chalk`{white standard-version} {magenta dev}  ^4.3.0`,
-      chalk`{white tap}              {magenta dev}  ^11.1.3`
+      chalk`{white chalk}            {cyan prod} ${pkg.dependencies.chalk}`,
+      chalk`{white latest-version}   {cyan prod} ${pkg.dependencies['latest-version']}`,
+      chalk`{white ora}              {cyan prod} ${pkg.dependencies.ora}`,
+      chalk`{white semver}           {cyan prod} ${pkg.dependencies.semver}`,
+      chalk`{white sywac}            {cyan prod} ${pkg.dependencies.sywac}`,
+      chalk`{white coveralls}        {magenta dev}  ${pkg.devDependencies.coveralls}`,
+      chalk`{white mockery}          {magenta dev}  ${pkg.devDependencies.mockery}`,
+      chalk`{white standard}         {magenta dev}  ${pkg.devDependencies.standard}`,
+      chalk`{white standard-version} {magenta dev}  ${pkg.devDependencies['standard-version']}`,
+      chalk`{white tap}              {magenta dev}  ${pkg.devDependencies.tap}`
     ]))
     t.notOk(r.stderr)
   })
@@ -79,16 +80,16 @@ test('--all includes everything defined', t => {
 test('--sort sorts list', t => {
   return cli(`${parentPath} --all --sort`).then(r => {
     t.equal(r.stdout, withLineFeeds([
-      chalk`{white chalk}            {cyan prod} ^2.3.2`,
-      chalk`{white coveralls}        {magenta dev}  ^3.0.0`,
-      chalk`{white latest-version}   {cyan prod} ^3.1.0`,
-      chalk`{white mockery}          {magenta dev}  ^2.1.0`,
-      chalk`{white ora}              {cyan prod} ^2.0.0`,
-      chalk`{white semver}           {cyan prod} ^5.5.0`,
-      chalk`{white standard}         {magenta dev}  ^11.0.1`,
-      chalk`{white standard-version} {magenta dev}  ^4.3.0`,
-      chalk`{white sywac}            {cyan prod} ^1.2.0`,
-      chalk`{white tap}              {magenta dev}  ^11.1.3`
+      chalk`{white chalk}            {cyan prod} ${pkg.dependencies.chalk}`,
+      chalk`{white coveralls}        {magenta dev}  ${pkg.devDependencies.coveralls}`,
+      chalk`{white latest-version}   {cyan prod} ${pkg.dependencies['latest-version']}`,
+      chalk`{white mockery}          {magenta dev}  ${pkg.devDependencies.mockery}`,
+      chalk`{white ora}              {cyan prod} ${pkg.dependencies.ora}`,
+      chalk`{white semver}           {cyan prod} ${pkg.dependencies.semver}`,
+      chalk`{white standard}         {magenta dev}  ${pkg.devDependencies.standard}`,
+      chalk`{white standard-version} {magenta dev}  ${pkg.devDependencies['standard-version']}`,
+      chalk`{white sywac}            {cyan prod} ${pkg.dependencies.sywac}`,
+      chalk`{white tap}              {magenta dev}  ${pkg.devDependencies.tap}`
     ]))
     t.notOk(r.stderr)
   })
