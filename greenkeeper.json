@@ -2,13 +2,7 @@
   "groups": {
     "default": {
       "packages": [
-        "package.json",
-        "test/all/package.json",
-        "test/bundle-alt/package.json",
-        "test/empty/package.json",
-        "test/invalid-json/package.json",
-        "test/package.json",
-        "test/package.json/gitdummy"
+        "package.json"
       ]
     }
   }

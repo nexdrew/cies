@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "cliui": "^4.1.0",
-    "decamelize": "^2.0.0",
+    "cliui": "^3.2.0",
+    "decamelize": "^1.1.1",
     "find-up": "^2.1.0"
   },
   "bundleDependencies": [
