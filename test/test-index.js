@@ -2,33 +2,34 @@
 
 const test = require('tap').test
 const cies = require('../index')
+const pkg = require('../package.json')
 
 test('works without opts', t => {
   return cies().then(deps => {
     t.same(deps, [
       {
         name: 'chalk',
-        semver: '^2.3.2',
+        semver: pkg.dependencies.chalk,
         types: ['prod']
       },
       {
         name: 'latest-version',
-        semver: '^3.1.0',
+        semver: pkg.dependencies['latest-version'],
         types: ['prod']
       },
       {
         name: 'ora',
-        semver: '^2.0.0',
+        semver: pkg.dependencies.ora,
         types: ['prod']
       },
       {
         name: 'semver',
-        semver: '^5.5.0',
+        semver: pkg.dependencies.semver,
         types: ['prod']
       },
       {
         name: 'sywac',
-        semver: '^1.2.0',
+        semver: pkg.dependencies.sywac,
         types: ['prod']
       }
     ])
