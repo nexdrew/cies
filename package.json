@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "chalk": "^2.3.2",
-    "latest-version": "^3.1.0",
+    "latest-version": "^4.0.0",
     "ora": "^2.0.0",
     "semver": "^5.5.0",
     "sywac": "^1.2.0"
