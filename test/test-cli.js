@@ -176,7 +176,7 @@ test('-v looks up installed versions', t => {
       chalk`{white which}               {magenta dev}          ^1.2.9  {inverse not installed} {cyan 9.9.9}     {cyan out-of-range}`,
       chalk`{white write-file-atomic}   {green bundled}      unknown {inverse not installed} 9.9.9     ¯\\_(ツ)_/¯`
     ]))
-    t.notOk(r.stderr)
+    t.equal(r.stderr, chalk`- {white Loading versions}\n`)
   })
 })
 
