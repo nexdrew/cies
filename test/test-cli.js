@@ -191,3 +191,29 @@ test('supports alt bundleDependencies', t => {
     t.notOk(r.stderr)
   })
 })
+
+test('-h prints help text', t => {
+  return cli('-h').then(r => {
+    t.equal(r.stdout, withLineFeeds([
+      chalk.white.underline('List dependencies from package.json'),
+      '',
+      chalk`{white Usage:} {magenta cli} {green [dir]} {cyan [options]}`,
+      '',
+      chalk.white('Arguments:'),
+      chalk`  {green [dir]}  Optional path to directory containing package.json  {dim [dir]}`,
+      '',
+      chalk.white('Options:'),
+      chalk`  {cyan -d, --dev}        Include devDependencies               {dim [boolean]}`,
+      chalk`  {cyan -p, --peer}       Include peerDependencies              {dim [boolean]}`,
+      chalk`  {cyan -b, --bundled}    Include bundledDependencies           {dim [boolean]}`,
+      chalk`  {cyan -o, --optional}   Include optionalDependencies          {dim [boolean]}`,
+      chalk`  {cyan -a, --all}        Include dependencies from all types   {dim [boolean]}`,
+      chalk`  {cyan -x, --exclusive}  Exclude production dependencies       {dim [boolean]}`,
+      chalk`  {cyan -s, --sort}       Sort list before printing             {dim [boolean]}`,
+      chalk`  {cyan -v, --versions}   Lookup installed and latest versions  {dim [boolean]}`,
+      chalk`  {cyan -t, --terse}      Print names only, without color       {dim [boolean]}`,
+      chalk`  {cyan -h, --help}       Print this help content               {dim [boolean]}`,
+      chalk`  {cyan -V, --version}    Print cies program version            {dim [boolean]}`
+    ]))
+  })
+})

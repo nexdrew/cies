@@ -12,7 +12,7 @@ const colors = {
 
 let opts, spinner
 const cli = require('sywac')
-  .preface(null, 'List dependencies from package.json')
+  .preface(null, chalk.white.underline('List dependencies from package.json'))
   .positional('[dir]', {
     paramsDesc: 'Optional path to directory containing package.json'
   })
@@ -52,6 +52,16 @@ const cli = require('sywac')
     implicitCommand: false
   })
   .outputSettings({ maxWidth: 66 })
+  .style({
+    usagePrefix: str => {
+      return chalk.white(str.slice(0, 6)) + ' ' + chalk.magenta(str.slice(7))
+    },
+    usagePositionals: str => chalk.green(str),
+    usageOptionsPlaceholder: str => chalk.cyan(str),
+    group: s => chalk.white(s),
+    flags: s => s[0] === '[' ? chalk.green(s) : chalk.cyan(s),
+    hints: s => chalk.dim(s)
+  })
 
 module.exports = function run () {
   return cli
