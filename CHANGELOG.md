@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/nexdrew/cies/compare/v3.0.0...v3.1.0) (2018-12-21)
+
+
+### Features
+
+* add -m, -n, -f, -c options ([#9](https://github.com/nexdrew/cies/issues/9)) ([bf31d7c](https://github.com/nexdrew/cies/commit/bf31d7c))
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/nexdrew/cies/compare/v2.0.0...v3.0.0) (2018-03-21)
 
