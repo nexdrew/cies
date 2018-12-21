@@ -96,7 +96,11 @@ Options:
   -x, --exclusive  Exclude production dependencies       [boolean]
   -s, --sort       Sort list before printing             [boolean]
   -v, --versions   Lookup installed and latest versions  [boolean]
-  -t, --terse      Print names only, without color       [boolean]
+  -m, --major      Only deps behind by major version     [boolean]
+  -n, --minor      Only deps behind by minor version     [boolean]
+  -f, --patch      Only deps behind by patch version     [boolean]
+  -c, --command    Print commands to update to latest    [boolean]
+  -t, --terse      Print names/commands only, no color   [boolean]
   -h, --help       Print this help content               [boolean]
   -V, --version    Print cies program version            [boolean]
 ```

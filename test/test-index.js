@@ -8,11 +8,6 @@ test('works without opts', t => {
   return cies().then(deps => {
     t.same(deps, [
       {
-        name: 'chalk',
-        semver: pkg.dependencies.chalk,
-        types: ['prod']
-      },
-      {
         name: 'latest-version',
         semver: pkg.dependencies['latest-version'],
         types: ['prod']
@@ -30,6 +25,11 @@ test('works without opts', t => {
       {
         name: 'sywac',
         semver: pkg.dependencies.sywac,
+        types: ['prod']
+      },
+      {
+        name: 'sywac-style-basic',
+        semver: pkg.dependencies['sywac-style-basic'],
         types: ['prod']
       }
     ])

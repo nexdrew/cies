@@ -57,7 +57,7 @@ module.exports = function cies (opts) {
     if (opts.sort) deps.sort((a, b) => a.name.localeCompare(b.name))
     return deps
   }).then(deps => {
-    if (opts.terse || !opts.versions) return deps
+    if ((!opts.versions || (opts.terse && !opts.command)) && !opts.major && !opts.minor && !opts.patch) return deps
 
     const promises = []
     let scopeName
@@ -80,6 +80,13 @@ module.exports = function cies (opts) {
         } else {
           deps[i].diff = '¯\\_(ツ)_/¯'
         }
+      }
+      if (opts.major || opts.minor || opts.patch) {
+        let matches = [/out/, /ツ/]
+        if (opts.major) matches.push(/major/)
+        if (opts.minor) matches.push(/minor/)
+        if (opts.patch) matches.push(/patch/)
+        return deps.filter(d => matches.some(regex => regex.test(d.diff)))
       }
       return deps
     })
