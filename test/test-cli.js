@@ -1,7 +1,5 @@
 'use strict'
 
-process.env.FORCE_COLOR = '1'
-
 const test = require('tap').test
 const cp = require('child_process')
 const path = require('path')
