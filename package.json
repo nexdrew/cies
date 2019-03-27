@@ -41,17 +41,17 @@
   },
   "homepage": "https://github.com/nexdrew/cies#readme",
   "devDependencies": {
-    "coveralls": "^3.0.0",
+    "coveralls": "^3.0.3",
     "mockery": "^2.1.0",
-    "standard": "^12.0.0",
-    "standard-version": "^4.3.0",
+    "standard": "^12.0.1",
+    "standard-version": "^5.0.2",
     "tap": "^12.6.1"
   },
   "dependencies": {
-    "latest-version": "^4.0.0",
-    "ora": "^3.0.0",
-    "semver": "^5.5.0",
-    "sywac": "^1.2.0",
-    "sywac-style-basic": "^1.0.0"
+    "latest-version": "^5.0.0",
+    "ora": "^3.2.0",
+    "semver": "^6.0.0",
+    "sywac": "^1.2.1",
+    "sywac-style-basic": "^1.0.1"
   }
 }
