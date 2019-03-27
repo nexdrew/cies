@@ -48,7 +48,7 @@
     "tap": "^12.6.1"
   },
   "dependencies": {
-    "latest-version": "^4.0.0",
+    "latest-version": "^5.0.0",
     "ora": "^3.2.0",
     "semver": "^5.5.0",
     "sywac": "^1.2.1",
