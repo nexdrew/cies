@@ -50,7 +50,7 @@
   "dependencies": {
     "latest-version": "^4.0.0",
     "ora": "^3.0.0",
-    "semver": "^5.5.0",
+    "semver": "^6.0.0",
     "sywac": "^1.2.0",
     "sywac-style-basic": "^1.0.0"
   }
