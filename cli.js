@@ -105,7 +105,7 @@ module.exports = function run () {
       const noop = x => x
       function dcolor (diff) {
         if (!diff) return chalk.green
-        for (let [regex, color] of dcolorMap) {
+        for (const [regex, color] of dcolorMap) {
           if (regex.test(diff)) return chalk[color]
         }
         return noop
@@ -163,7 +163,7 @@ module.exports = function run () {
         if (!opts.terse) console.log() // empty line
         if (!needsUpdate) console.log('Nothing to update :)')
         else {
-          for (let [flags, pkgs] of Object.entries(needsUpdate)) {
+          for (const [flags, pkgs] of Object.entries(needsUpdate)) {
             console.log(`npm i -${flags} ` + pkgs.join(' '))
           }
         }
