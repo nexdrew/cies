@@ -37,7 +37,7 @@ function addArray (deps, array, type) {
 
 function addObject (deps, obj, type) {
   let dep
-  for (let [name, semver] of Object.entries(obj)) {
+  for (const [name, semver] of Object.entries(obj)) {
     dep = deps.find(d => d.name === name)
     if (dep) dep.types.push(type)
     else deps.push({ types: [type], name, semver })
@@ -82,7 +82,7 @@ module.exports = function cies (opts) {
         }
       }
       if (opts.major || opts.minor || opts.patch) {
-        let matches = [/out/, /ツ/]
+        const matches = [/out/, /ツ/]
         if (opts.major) matches.push(/major/)
         if (opts.minor) matches.push(/minor/)
         if (opts.patch) matches.push(/patch/)
