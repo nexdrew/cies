@@ -1,0 +1,7 @@
+color: true
+coverage: true
+jobs: 2
+files:
+  - test/test*.js
+test-env:
+  - FORCE_COLOR=1
