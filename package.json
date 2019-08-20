@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/nexdrew/cies#readme",
   "devDependencies": {
-    "coveralls": "^3.0.3",
+    "coveralls": "^3.0.6",
     "mockery": "^2.1.0",
     "standard": "^14.0.0",
     "standard-version": "^7.0.0",
